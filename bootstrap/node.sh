@@ -1,33 +1,12 @@
 #!/bin/sh
 
-source /vagrant/bootstrap/common.sh 
-
+# host name
 name=${1}
 
-#
-# Setup needed repos, and install useful config mgmt tools
-#
+# Read in env variables and run common tasks
+source /vagrant/bootstrap/localrc
+source /vagrant/bootstrap/common.sh
 
-RDO_RPM=http://repos.fedorapeople.org/repos/openstack/openstack-havana/rdo-release-havana-7.noarch.rpm
-EPEL_RPM=http://mirror.pnl.gov/epel/6/i386/epel-release-6-8.noarch.rpm
-
-yum -y remove puppetlabs-release
-yum -y install ${RDO_RPM}
-yum -y install ${EPEL_RPM}
-
-yum -y install crudini
-[ -r /etc/yum/pluginconf.d/priorities.conf ] && crudini --set /etc/yum/pluginconf.d/priorities.conf main enabled 0
-
-yum -y install augeas
-
-#
-# Setup hostnames properly & consistently 
-#
-
-# Setup hostnames
-#
-hostname ${name}.localnet
-augtool -s < /vagrant/bootstrap/hostnames.aug
 
 #
 # Upgrade or install some target packages ... needs to go away into puppet.

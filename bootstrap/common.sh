@@ -1,12 +1,30 @@
 #
-# Define
+# Common tasks across all nodes
 #
 
-EPEL_RPM=http://mirror.pnl.gov/epel/6/i386/epel-release-6-8.noarch.rpm
+# Setup up appropriate repos
+yum -y remove puppetlabs-release
+yum -y install ${RDO_RPM}
+yum -y install ${EPEL_RPM}
 
+#
+# intall useful config mgmt tools
+#
+yum -y install crudini
+[ -r /etc/yum/pluginconf.d/priorities.conf ] && crudini --set /etc/yum/pluginconf.d/priorities.conf main enabled 0
 
-# Havana
-#RDO_RPM=http://repos.fedorapeople.org/repos/openstack/openstack-havana/rdo-release-havana-7.noarch.rpm
+yum -y install augeas
 
-#Icehouse
-RDO_RPM=http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
+#
+# Setup hostnames properly & consistently 
+#
+
+# Setup hostnames
+#
+hostname foreman.localnet
+augtool -s < /vagrant/bootstrap/hostnames.aug
+
+#
+# Update packages
+#
+#yum -y upgrade 
