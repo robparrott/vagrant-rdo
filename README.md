@@ -33,11 +33,12 @@ Once fully up, the Foreman instance should be available at
 with the default username/password. Logging in, you should see 4 hosts registered with Foreman, but unconfigured. Each host is named by the function: "foreman," "controller," "compute," and "networker."  From here, you can set host groups and parameters on each host via the Foreman web interface, then log into each host and run the puppet agent by hand. For example, to setup the controller node after configuring it, run
 ```bash
 $ vagrant ssh controller
-# puppet agent -tvd
+...
+$> puppet agent -tvd
 ```
 
 Once puppet is run on each host, you can log into the OpenStack dashboard at 
 
-- http://local:9080/dashboard
+- http://localhost:9080/dashboard
 
 and interact with the various services via the standard OpenStack ports forwarded to "localhost".
