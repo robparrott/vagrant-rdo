@@ -7,6 +7,8 @@ name=${1}
 source /vagrant/bootstrap/localrc
 source /vagrant/bootstrap/common.sh
 
+# Set my hostname
+hostname ${name}.localnet
 
 #
 # Upgrade or install some target packages ... needs to go away into puppet.

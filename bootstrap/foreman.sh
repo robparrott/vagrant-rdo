@@ -5,6 +5,11 @@ source /vagrant/bootstrap/localrc
 source /vagrant/bootstrap/common.sh
 
 #
+# Set my hostname
+#
+hostname foreman.localnet
+
+#
 # Install required packages
 #
 RPMS="augeas mysql-server packstack-modules-puppet \
