@@ -28,7 +28,7 @@ If you'd rather build from the openstack installer repo, clone the repo into the
 
 Once fully up, the Foreman instance should be available at
 
-- http://localhost:8080
+- http://127.0.0.1:8080
 
 with the default username/password. Logging in, you should see 4 hosts registered with Foreman, but unconfigured. Each host is named by the function: "foreman," "controller," "compute," and "networker."  From here, you can set host groups and parameters on each host via the Foreman web interface, then log into each host and run the puppet agent by hand. For example, to setup the controller node after configuring it, run
 ```bash
@@ -39,6 +39,6 @@ $> puppet agent -tvd
 
 Once puppet is run on each host, you can log into the OpenStack dashboard at 
 
-- http://localhost:9080/dashboard
+- http://127.0.0.1:9080/dashboard
 
 and interact with the various services via the standard OpenStack ports forwarded to "localhost".
