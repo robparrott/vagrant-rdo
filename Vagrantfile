@@ -32,8 +32,6 @@ Vagrant.configure('2') do |config|
   # 
   config.vm.define "foreman", primary: true do |foreman|
 
-#    foreman.vm.box = override.vm.box 
-
     # Forward standard ports (local only, does not run under AWS)    
     foreman.vm.network :forwarded_port, guest: 80,  host: 8080, auto_correct: true
     foreman.vm.network :forwarded_port, guest: 443, host: 8443, auto_correct: true
@@ -41,7 +39,7 @@ Vagrant.configure('2') do |config|
     # provide a 2nd network
     foreman.vm.network "private_network", ip: "192.168.1.2", virtualbox__intnet: "private"
 
-    # Install r10k using the shell provisioner and download the Puppet modules
+    # Run shell provisioner
     foreman.vm.provision :shell, :path => 'bootstrap/foreman.sh'
   end
 
@@ -76,22 +74,8 @@ Vagrant.configure('2') do |config|
     # provide a 2nd network
     controller.vm.network "private_network", ip: "192.168.1.3", virtualbox__intnet: "private"
 
-    # Install r10k using the shell provisioner and download the Puppet modules
+    # Run shell provisioner
     controller.vm.provision :shell, :path => 'bootstrap/node.sh', :args => 'controller'
-  end
-
-
-  #
-  # Define the Compute server
-  # 
-
-  config.vm.define "compute", primary: true do |compute|
-
-    # provide a 2nd network
-    compute.vm.network "private_network", ip: "192.168.1.4", virtualbox__intnet: "private"
-
-    # Install r10k using the shell provisioner and download the Puppet modules
-    compute.vm.provision :shell, :path => 'bootstrap/node.sh', :args => 'compute'
   end
 
 
@@ -100,12 +84,28 @@ Vagrant.configure('2') do |config|
   # 
 
   config.vm.define "networker", primary: true do |networker|
-
-    # provide a 2nd network
-    networker.vm.network "private_network", ip: "192.168.1.5", virtualbox__intnet: "private"
-
-    # Install r10k using the shell provisioner and download the Puppet modules
+    networker.vm.network "private_network", ip: "192.168.1.4", virtualbox__intnet: "private"
     networker.vm.provision :shell, :path => 'bootstrap/node.sh', :args => 'networker'
   end
+
+  #
+  # Define the Compute server
+  # 
+
+  config.vm.define "compute", primary: true do |compute|
+    compute.vm.network "private_network", ip: "192.168.1.5", virtualbox__intnet: "private"
+    compute.vm.provision :shell, :path => 'bootstrap/node.sh', :args => 'compute'
+  end
+
+  #
+  # Define a 2nd Compute server
+  # 
+
+  # config.vm.define "compute2", primary: true do |compute|
+
+  #   compute2.vm.network "private_network", ip: "192.168.1.6", virtualbox__intnet: "private"
+  #   compute2.vm.provision :shell, :path => 'bootstrap/node.sh', :args => 'compute2'
+  # end
+
 
 end
