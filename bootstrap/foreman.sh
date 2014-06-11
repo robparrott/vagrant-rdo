@@ -32,5 +32,13 @@ fi
 export FOREMAN_PROVISIONING=true # Will foreman be used for provisioning? true or false
 export FOREMAN_GATEWAY=false      # The gateway set up for foreman provisioning
 cd bin
+
+#
+# Let's tweak the settings to make our lives easier ...
+#
+perl -i -p -e 's/172\.16\.0\.1/192.168.1.3/g' seeds.rb
+perl -i -p -e 's/172\.16\.1\.1/127.0.0.1/g' seeds.rb
+perl -i -p -e 's/192\.168\.203\.1/192.168.1.3/g' seeds.rb
+
 echo "" | bash -x ./foreman_server.sh
 

@@ -21,7 +21,7 @@ yum -y install augeas
 
 # Setup hostnames
 #
-hostname foreman.localnet
+
 augtool -s < /vagrant/bootstrap/hostnames.aug
 
 #
